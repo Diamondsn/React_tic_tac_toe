@@ -73,6 +73,30 @@ class Board extends React.Component {
     );
   }
 }
+class Time extends React.Component{
+ constructor(){
+    super();
+    this.state={
+      starttime:new Date(),
+      currenttime:new Date(),
+    }
+    setInterval(function(){
+      this.setState({
+        currenttime:new Date(),
+      });
+    }.bind(this),1000);
+ }
+
+ 
+
+ render(){
+   return (<div>
+     <div>{'开始时间:'+this.state.starttime.getHours()+':'+this.state.starttime.getMinutes()+':'+this.state.starttime.getSeconds()}</div>
+     <div>{this.state.currenttime.getHours()+':'+this.state.currenttime.getMinutes()+':'+this.state.currenttime.getSeconds()}</div>
+     <div>{'已用时：'+Math.floor(parseInt(this.state.currenttime-this.state.starttime)/1000)+'秒'}</div>
+     </div>);
+ }
+}
 
 class Game extends React.Component {
   constructor() {
@@ -87,8 +111,8 @@ class Game extends React.Component {
     };
   }
   handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
+    const history = this.state.history;
+    const current = history[this.state.stepNumber];
     const squares = current.squares.slice();//浅复制
     if (calculatateWinner(squares).winner || squares[i]) {
       return;
@@ -156,6 +180,9 @@ class Game extends React.Component {
           <div>{status}</div>
           <button onClick={() => this.handleSort()}>sort</button>
           <ol>{moves}</ol>
+        </div>
+        <div className='game-time'>
+        <Time />
         </div>
       </div>
     );

@@ -48,3 +48,8 @@ ol, ul {
 .game-info {
   margin-left: 20px;
 }
+
+.game-time {
+  margin-left:20px;
+  color:red;
+}
